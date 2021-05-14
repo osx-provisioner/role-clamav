@@ -1,0 +1,141 @@
+---
+name: role-clamav-push
+
+# Workflow Secrets:
+# SLACK_WEBHOOK              (Required, for slack notifications...)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7]
+
+    steps:
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Build -- Checkout Repository
+        uses: actions/checkout@v1
+
+      - name: Build -- Setup Environment
+        run: |
+          source ./.github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Build -- Install Requirements
+        run: |
+          pip install poetry
+          poetry install
+      - name: Build -- Run Linter
+        run: |
+          poetry run molecule lint
+      - name: Build -- Run docker1 Scenario
+        run: |
+          poetry run molecule test -s docker1
+
+      - name: Build -- Report Job Status (Success)
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" "build was successful!"
+      - name: Build -- Report Job Status (Failure)
+        if: failure()
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" "build has failed!"
+
+  documentation_test:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Documentation Test -- Checkout Repository
+        uses: actions/checkout@v1
+      - name: Documentation Test -- Documentation Validation
+        uses: gaurav-nelson/github-action-markdown-link-check@1.0.11
+        with:
+          use-quiet-mode: 'no'
+          use-verbose-mode: 'yes'
+
+      - name: Documentation Test -- Report Success
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" "documentation test has passed!"
+      - name: Documentation Test -- Report Failure
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" "documentation test has failed!"
+
+  security_test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Security Test -- Checkout Repository
+        uses: actions/checkout@v1
+      - name: Security Test -- Run Gitleaks
+        uses: zricethezav/gitleaks-action@master
+
+      - name: Security Test -- Report Success
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" "security test has passed!"
+      - name: Security Test -- Report Failure
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" "security test has failed!"
+  
+  release:
+    needs: [build, documentation_test, security_test]
+  
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Release -- Checkout
+        uses: actions/checkout@v1
+  
+      - name: Release -- Setup Environment
+        run: |
+          source ./.github/scripts/setup.sh
+        env:
+          WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+      
+      - name: Release -- Prepare Content
+        if: contains(github.ref, '/tags/v')
+        run: |
+          NEWTAG=${BRANCH_OR_TAG}
+          echo "NEWTAG=${NEWTAG}" >> $GITHUB_ENV
+          echo "{}" > package.json
+      - name: Release -- Generate Changelog
+        if: contains(github.ref, '/tags/v')
+        uses: scottbrenner/generate-changelog-action@1.0.3
+        id: Changelog
+        env:
+          REPO: ${{ github.repository }}
+      - name: Release -- Create Github Release
+        if: contains(github.ref, '/tags/v')
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.NEWTAG }}
+          release_name: Release ${{ env.NEWTAG }}
+          body: |
+            ${{ steps.Changelog.outputs.changelog }}
+          draft: true
+          prerelease: false
+  
+      - name: Release -- Report Job Status (Success)
+        if: contains(github.ref, '/tags/v')
+        run: |
+          ./.github/scripts/notifications.sh \
+              "${NOTIFICATION}" \
+              "automated release has been created: https://github.com/${USERNAME}/${PROJECT_NAME}/releases"
+      - name: Release -- Report Job Status (Failure)
+        if: failure() && contains(github.ref, '/tags/v')
+        run: |
+          ./.github/scripts/notifications.sh "${NOTIFICATION}" "automated release generation failed!"     
