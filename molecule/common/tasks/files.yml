@@ -1,0 +1,15 @@
+---
+- name: Check clamd is installed
+  ansible.builtin.stat:
+    path: "/usr/local/sbin/clamd"
+  register: clamd_file
+
+- name: Check freshclam is installed
+  ansible.builtin.stat:
+    path: "/usr/local/bin/freshclam"
+  register: freshclam_file
+
+- name: Check clamwatch is installed
+  ansible.builtin.stat:
+    path: "/usr/local/bin/clamwatch"
+  register: clamwatch_file

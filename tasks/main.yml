@@ -1,5 +1,51 @@
 ---
-# tasks file for role-clamav
+# tasks file for clamav
 
-- name: Placeholder Task
-  debug: msg="Your dedication and hard work goes here."
+- name: Install ClamAV From HomeBrew
+  community.general.homebrew:
+    name:
+      - clamav
+      - fswatch
+    state: upgraded
+  retries: "{{ clamav_homebrew_retries }}"
+  delay: 3
+  register: install_clamav
+  until: install_clamav is not failed
+  tags:
+    - clamav
+
+- name: Setup Folders
+  ansible.builtin.include_tasks:
+    file: "folders.yml"
+  tags:
+    - clamav
+
+- name: Setup Logging
+  ansible.builtin.include_tasks:
+    file: "logging.yml"
+  tags:
+    - clamav
+
+- name: Setup Configuration
+  ansible.builtin.include_tasks:
+    file: "configuration.yml"
+  tags:
+    - clamav
+
+- name: Setup ClamWatch Service
+  ansible.builtin.include_tasks:
+    file: "watcher.yml"
+  when: clamav_clamwatch
+  tags:
+    - clamav
+
+- name: Flush Handlers
+  ansible.builtin.meta: flush_handlers
+  tags:
+    - clamav
+
+- name: Ensure Services Are Always Running
+  ansible.builtin.include_tasks:
+    file: "started.yml"
+  tags:
+    - clamav

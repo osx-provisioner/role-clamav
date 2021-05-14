@@ -1,0 +1,25 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+
+    - name: Check File System Content
+      include_tasks: "../common/tasks/files.yml"
+
+    - name: Check Processes
+      include_tasks: "../common/tasks/processes.yml"
+
+    - name: Assert the binaries are symlinked correctly
+      assert:
+        that:
+          - clamd_file.stat.executable
+          - freshclam_file.stat.executable
+        msg: "The binaries were not symlinked.  Check the homebrew install."
+
+    - name: Assert the processes as running
+      ansible.builtin.assert:
+        that:
+          - '"/usr/local/sbin/clamd" in root_processes.stdout'
+          - '"/usr/local/bin/freshclam" in _clamav_processes.stdout'
+        msg: "The services did not start correctly."

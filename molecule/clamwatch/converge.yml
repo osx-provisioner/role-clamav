@@ -3,8 +3,8 @@
   hosts: all
   connection: local
   vars:
-    test: true
+    clamav_clamwatch: true
   tasks:
-    - name: "Include osx_provisioner.clamav"
+    - name: "Include ClamAV"
       ansible.builtin.include_role:
         name: "osx_provisioner.clamav"

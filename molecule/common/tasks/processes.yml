@@ -1,0 +1,10 @@
+---
+- name: Check root processes
+  ansible.builtin.command: ps -u root
+  register: root_processes
+  changed_when: not root_processes.stdout
+
+- name: Check _clamav processes
+  ansible.builtin.command: ps -u _clamav
+  register: _clamav_processes
+  changed_when: not _clamav_processes.stdout
