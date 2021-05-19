@@ -1,0 +1,12 @@
+{
+    "_template": "https://github.com/shared-vision-solutions/ansible-workbench.git",
+    "author": "Niall Byrne",
+    "company": "Shared Vision Solutions",
+    "description": "Ansible role that installs ClamAV antivirus on OSX machines.",
+    "email": "niall@niallbyrne.ca",
+    "galaxy_namespace_slug": "osx_provisioner",
+    "galaxy_role_slug": "clamav",
+    "github_handle": "osx-provisioner",
+    "project_name": "role-clamav",
+    "project_slug": "role-clamav"
+}

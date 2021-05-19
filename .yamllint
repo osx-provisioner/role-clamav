@@ -21,18 +21,23 @@ rules:
   indentation:
     spaces: consistent
     indent-sequences: true
+    level: error
   comments: disable
   comments-indentation: disable
-  document-start: enable
+  document-start:
+    level: error
   empty-lines:
     max: 3
     level: error
   hyphens:
     level: error
-  key-duplicates: enable
+  key-duplicates:
+    level: error
   line-length: disable
-  new-line-at-end-of-file: enable
+  new-line-at-end-of-file:
+    level: error
   new-lines:
     type: unix
-  trailing-spaces: enable
+  trailing-spaces:
+    level: error
   truthy: disable
