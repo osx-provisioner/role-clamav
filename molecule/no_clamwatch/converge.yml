@@ -5,6 +5,5 @@
   vars:
     clamav_clamwatch: false
   tasks:
-    - name: "Include ClamAV"
-      ansible.builtin.include_role:
-        name: "osx_provisioner.clamav"
+    - name: Include Roles
+      include_tasks: "../common/tasks/roles.yml"

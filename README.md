@@ -24,7 +24,8 @@ ClamAV should be granted `Full Disk Access`.  This requires making the appropria
 Requirements
 ------------
 
-None
+- Homebrew must aleady be present on the machine ([geerlingguy.mac.hombrew](https://github.com/geerlingguy/ansible-collection-mac) is a great solution for this).
+- See the [homebrew website](https://brew.sh/) for further details about this tool.
 
 Role Variables
 --------------
@@ -57,7 +58,7 @@ Role Variables
 Dependencies
 ------------
 
-- geerlingguy.homebrew
+None
 
 Example Playbook
 ----------------
@@ -65,6 +66,8 @@ Example Playbook
 ```yaml
 - hosts: email
   roles:
+  - role: elliotweiser.osx-command-line-tools
+  - role: geerlingguy.mac.homebrew
   - role: osx_provisioner.clamav
     clamav_clamwatch: true
     clamav_clamwatch_target_folder: "{{ lookup('env','HOME') }}/Downloads"

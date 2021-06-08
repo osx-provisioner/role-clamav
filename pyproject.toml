@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "role-clamav"
-version = "0.1.1"
+version = "0.2.0"
 description = "Install ClamAV antivirus on OSX. Includes a simple realtime scan implementation that watches a configured folder."
 authors = ["Niall Byrne <niall@niallbyrne.ca>"]
 
