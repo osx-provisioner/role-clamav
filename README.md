@@ -1,12 +1,10 @@
 # role-clamav
 
 ### Master:
-- Travis CI: ![TravisCI](https://travis-ci.com/osx-provisioner/role-clamav.svg?branch=master)
-- Github Actions: [![role-clamav](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml)
+[![role-clamav](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml/badge.svg?branch=master)](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml)
 
 ### Production:
-- Travis CI: ![TravisCI](https://travis-ci.com/osx-provisioner/role-clamav.svg?branch=production)
-- Github Actions: [![role-clamav](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml/badge.svg?branch=production)](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml)
+[![role-clamav](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml/badge.svg?branch=production)](https://github.com/osx-provisioner/role-clamav/actions/workflows/push.yml)
 
 Ansible role that installs ClamAV antivirus on OSX machines.
 
@@ -84,7 +82,7 @@ Example Playbook
 License
 -------
 
-MPL-2
+MIT
 
 Author Information
 ------------------
