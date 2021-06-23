@@ -84,6 +84,8 @@ License
 
 MIT
 
+(ClamAV itself is licensed as GPLv2)
+
 Author Information
 ------------------
 
