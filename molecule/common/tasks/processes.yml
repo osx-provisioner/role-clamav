@@ -1,10 +1,22 @@
 ---
-- name: Check root processes
+- name: Load Default Var Content
+  include_vars: "../../../defaults/main.yml"
+
+- name: Capture Root Processes
   ansible.builtin.command: ps -u root
   register: root_processes
   changed_when: not root_processes.stdout
 
-- name: Check _clamav processes
+- name: Create Root Processes Match String
+  set_fact:
+    root_process_match_string1: '/usr/local/sbin/clamd --foreground -c {{ clamav_clamd_config_file }}'
+    root_process_match_string2: '/bin/bash /usr/local/bin/clamwatch {{ clamav_clamwatch_target_folder }} {{ clamav_clamwatch_quarantine_folder }} {{ clamav_clamwatch_log_file }}'
+
+- name: Capture _clamav Processes
   ansible.builtin.command: ps -u _clamav
   register: _clamav_processes
   changed_when: not _clamav_processes.stdout
+
+- name: Create _clamav Processes Match String
+  set_fact:
+    _clamav_processes_match_string: '/usr/local/bin/freshclam --daemon --foreground --config-file {{ clamav_freshclam_config_file }}'

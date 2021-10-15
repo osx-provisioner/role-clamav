@@ -15,7 +15,7 @@
   become: true
   ansible.builtin.template:
     src: freshclam.conf.j2
-    dest: /usr/local/etc/clamav/freshclam.conf
+    dest:  "{{ clamav_freshclam_config_file }}"
     mode: 0644
     owner: _clamav
     group: _clamav
@@ -39,7 +39,7 @@
   become: true
   ansible.builtin.template:
     src: clamd.conf.j2
-    dest: /usr/local/etc/clamav/clamd.conf
+    dest: "{{ clamav_clamd_config_file }}"
     mode: 0644
     owner: root
     group: wheel

@@ -10,6 +10,8 @@
 	<array>
 		<string>/usr/local/sbin/clamd</string>
 		<string>--foreground</string>
+		<string>-c</string>
+		<string>{{ clamav_clamd_config_file }}</string>
 	</array>
 	<key>RunAtLoad</key>
 	<true/>

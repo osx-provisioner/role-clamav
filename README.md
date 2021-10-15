@@ -38,14 +38,21 @@ Role Variables
   - The ClamWatch daemon log file.
 - `clamav_clamwatch_stderr_log_file` 
   - The ClamWatch daemon error log file.
+- 
+- `clamav_freshclam_config_file`
+  - The FreshClam configuration file installation location.
 - `clamav_freshclam_log_file` 
   - The FreshClam daemon log file.
 - `clamav_freshclam_stderr_log_file` 
   - The FreshClam daemon error log file.
+- 
+- `clamav_clamd_config_file`
+  - The ClamD configuration file installation location.
 - `clamav_clamd_log_file` 
   - The ClamD daemon log file.
 - `clamav_clamd_stderr_log_file` 
   - The ClamD daemon error log file. 
+- 
 - `clamav_database_location` 
   - The location of the virus definition database.
 - `clamav_homebrew_retries`:
@@ -72,8 +79,10 @@ Example Playbook
     clamav_clamwatch_quarantine_folder: "{{ lookup('env','HOME') }}/Quarantine"
     clamav_clamwatch_log_file: /var/log/clamav.clamwatch.log
     clamav_clamwatch_stderr_log_file: /var/log/clamav.clamwatch.error.log
+    clamav_freshclam_config_file: /usr/local/etc/clamav/freshclam.conf
     clamav_freshclam_log_file: /var/log/clamav.freshclam.log
     clamav_freshclam_stderr_log_file: /var/log/clamav.freshclam.error.log
+    clamav_clamd_config_file: /usr/local/etc/clamav/freshclam.conf
     clamav_clamd_log_file: /var/log/clamav.clamd.log
     clamav_clamd_stderr_log_file: /var/log/clamav.clamd.error.log
     clamav_database_location: /usr/local/var/lib/clamav

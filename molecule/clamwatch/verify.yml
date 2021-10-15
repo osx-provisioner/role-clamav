@@ -21,7 +21,7 @@
     - name: Assert the processes as running
       ansible.builtin.assert:
         that:
-          - '"/usr/local/sbin/clamd" in root_processes.stdout'
-          - '"/usr/local/bin/freshclam" in _clamav_processes.stdout'
-          - '"/usr/local/bin/clamwatch" in root_processes.stdout'
+          - root_process_match_string1 in root_processes.stdout
+          - root_process_match_string2 in root_processes.stdout
+          - _clamav_processes_match_string in _clamav_processes.stdout
         msg: "The services did not start correctly."
