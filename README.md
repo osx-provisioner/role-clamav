@@ -11,7 +11,7 @@ Ansible role that installs ClamAV antivirus on OSX machines.
 ### Notes:
 - See the [ClamAV Github Repository](https://github.com/Cisco-Talos/clamav) for further details about this tool.
 
-### Catalina and Big Sur:
+### Catalina and Later:
 
 On OSX versions >= 10.15, there's a manual post installation step that should be done to maximize protection.  (This is required to monitor the `Downloads` folder.)
 
@@ -28,6 +28,8 @@ Requirements
 Role Variables
 --------------
 
+- `brew_prefix`
+  - Usually `/usr/local` or `/opt/homebrew` depending on your OSX version.
 - `clamav_clamwatch` 
   - A boolean that indicates whether the ClamWatch daemon should be installed.
 - `clamav_clamwatch_target_folder:` 
@@ -74,6 +76,7 @@ Example Playbook
   - role: elliotweiser.osx-command-line-tools
   - role: geerlingguy.mac.homebrew
   - role: osx_provisioner.clamav
+    brew_prefix: /usr/local
     clamav_clamwatch: true
     clamav_clamwatch_target_folder: "{{ lookup('env','HOME') }}/Downloads"
     clamav_clamwatch_quarantine_folder: "{{ lookup('env','HOME') }}/Quarantine"

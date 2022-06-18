@@ -8,7 +8,7 @@
 	<string>clamav.clamd</string>
 	<key>ProgramArguments</key>
 	<array>
-		<string>/usr/local/sbin/clamd</string>
+		<string>{{ brew_prefix }}/sbin/clamd</string>
 		<string>--foreground</string>
 		<string>-c</string>
 		<string>{{ clamav_clamd_config_file }}</string>

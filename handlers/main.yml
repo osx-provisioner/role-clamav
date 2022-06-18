@@ -3,7 +3,7 @@
 
 - name: Update Virus Definitions
   become: true
-  ansible.builtin.command: /usr/local/bin/freshclam --config-file "{{ clamav_freshclam_config_file }}"
+  ansible.builtin.command: "{{ brew_prefix }}/bin/freshclam --config-file '{{ clamav_freshclam_config_file }}'"
   changed_when: true
   listen: "Update Virus Definitions"
 

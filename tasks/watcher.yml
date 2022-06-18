@@ -47,9 +47,9 @@
 
 - name: Install ClamWatch Script
   become: true
-  ansible.builtin.copy:
-    src: clamwatch.sh
-    dest: /usr/local/bin/clamwatch
+  ansible.builtin.template:
+    src: clamwatch.sh.j2
+    dest: "{{ brew_prefix }}/bin/clamwatch"
     mode: 0755
     owner: root
     group: wheel

@@ -145,7 +145,7 @@ DatabaseMirror database.clamav.net
 
 # Send the RELOAD command to clamd.
 # Default: no
-NotifyClamd /usr/local/etc/clamav/clamd.conf
+NotifyClamd {{ brew_prefix }}/etc/clamav/clamd.conf
 
 # Run command after successful database update.
 # Default: disabled

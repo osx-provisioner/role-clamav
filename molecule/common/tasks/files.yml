@@ -1,15 +1,22 @@
 ---
+- name: Set CI Machine Type
+  set_fact:
+    ansible_machine: "{{ lookup('env','PLATFORM') }}"
+
+- name: Load Default Var Content
+  include_vars: "../../../defaults/main.yml"
+
 - name: Check clamd is installed
   ansible.builtin.stat:
-    path: "/usr/local/sbin/clamd"
+    path: "{{ brew_prefix }}/sbin/clamd"
   register: clamd_file
 
 - name: Check freshclam is installed
   ansible.builtin.stat:
-    path: "/usr/local/bin/freshclam"
+    path: "{{ brew_prefix }}/bin/freshclam"
   register: freshclam_file
 
 - name: Check clamwatch is installed
   ansible.builtin.stat:
-    path: "/usr/local/bin/clamwatch"
+    path: "{{ brew_prefix }}/bin/clamwatch"
   register: clamwatch_file

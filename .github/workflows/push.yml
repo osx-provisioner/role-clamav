@@ -146,7 +146,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        os: [10.15]
+        os: [10.15, 11, 12]
         platform: [x86_64]
         python-version: [3.8.10]
         scenario: ["no_clamwatch", "clamwatch"]
@@ -172,6 +172,7 @@ jobs:
           poetry run molecule test -s "${SCENARIO}"
         env:
           SCENARIO: ${{ matrix.scenario}}
+          PLATFORM: ${{ matrix.platform }}
 
       - name: OSX Build -- Report Job Status (Success)
         if: ${{ env.VERBOSE_NOTIFICATIONS  == '1' }}
