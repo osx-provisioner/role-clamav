@@ -29,6 +29,8 @@ Role Variables
 
 - `brew_prefix`
   - Usually `/usr/local` or `/opt/homebrew` depending on your OSX version.
+
+
 - `clamav_clamwatch` 
   - A boolean that indicates whether the ClamWatch daemon should be installed.
 - `clamav_clamwatch_target_folder:` 
@@ -39,21 +41,24 @@ Role Variables
   - The ClamWatch daemon log file.
 - `clamav_clamwatch_stderr_log_file` 
   - The ClamWatch daemon error log file.
-- 
+
+
 - `clamav_freshclam_config_file`
   - The FreshClam configuration file installation location.
 - `clamav_freshclam_log_file` 
   - The FreshClam daemon log file.
 - `clamav_freshclam_stderr_log_file` 
   - The FreshClam daemon error log file.
-- 
+
+
 - `clamav_clamd_config_file`
   - The ClamD configuration file installation location.
 - `clamav_clamd_log_file` 
   - The ClamD daemon log file.
 - `clamav_clamd_stderr_log_file` 
   - The ClamD daemon error log file. 
-- 
+
+ 
 - `clamav_database_location` 
   - The location of the virus definition database.
 - `clamav_homebrew_retries`:
@@ -70,7 +75,7 @@ Example Playbook
 ----------------
 
 ```yaml
-- hosts: email
+- hosts: web
   roles:
   - role: elliotweiser.osx-command-line-tools # Dependency of geerlingguy.mac.homebrew
   - role: geerlingguy.mac.homebrew
