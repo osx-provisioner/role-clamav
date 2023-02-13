@@ -12,12 +12,3 @@
     name: "clamav.freshclam"
     enabled: true
     state: started
-
-- name: Start Clamwatch
-  become: true
-  community.general.launchd:
-    name: "clamav.clamwatch"
-    enabled: true
-    state: started
-    force_stop: yes
-  when: clamav_clamwatch

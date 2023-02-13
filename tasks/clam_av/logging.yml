@@ -1,6 +1,6 @@
 ---
 - name: Check FreshClam logfile exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ clamav_freshclam_log_file }}"
   register: freshclam_log
 - name: Create FreshClam logfile
@@ -14,7 +14,7 @@
   when: not freshclam_log.stat.exists
 
 - name: Check FreshClam Error logfile exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ clamav_freshclam_stderr_log_file }}"
   register: freshclam_error_log
 - name: Create FreshClam Error logfile
@@ -28,7 +28,7 @@
   when: not freshclam_error_log.stat.exists
 
 - name: Check Clamd logfile exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ clamav_clamd_log_file }}"
   register: clamd_log
 - name: Create Clamd logfile
@@ -42,7 +42,7 @@
   when: not clamd_log.stat.exists
 
 - name: Check Clamd Error logfile exists
-  stat:
+  ansible.builtin.stat:
     path: "{{ clamav_clamd_stderr_log_file }}"
   register: clamd_error_log
 - name: Create Clamd Error logfile

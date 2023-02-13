@@ -6,4 +6,4 @@
     clamav_clamwatch: true
   tasks:
     - name: Include Roles
-      include_tasks: "../common/tasks/roles.yml"
+      ansible.builtin.include_tasks: "../common/tasks/roles.yml"

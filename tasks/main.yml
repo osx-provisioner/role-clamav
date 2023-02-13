@@ -14,30 +14,44 @@
   tags:
     - clamav
 
-- name: Setup Folders
+- name: Setup ClamAV Folders
   ansible.builtin.include_tasks:
-    file: "folders.yml"
+    file: "clam_av/folders.yml"
   tags:
     - clamav
 
-- name: Setup Logging
+- name: Setup ClamAV Logging
   ansible.builtin.include_tasks:
-    file: "logging.yml"
+    file: "clam_av/logging.yml"
   tags:
     - clamav
 
-- name: Setup Configuration
+- name: Setup ClamAV Configuration
   ansible.builtin.include_tasks:
-    file: "configuration.yml"
+    file: "clam_av/configuration.yml"
   tags:
     - clamav
 
-- name: Setup ClamWatch Service
+- name: Setup ClamWatch Folders
   ansible.builtin.include_tasks:
-    file: "watcher.yml"
+    file: "clam_watch/folders.yml"
+  tags:
+    - clamav
   when: clamav_clamwatch
+
+- name: Setup ClamWatch Logging
+  ansible.builtin.include_tasks:
+    file: "clam_watch/logging.yml"
   tags:
     - clamav
+  when: clamav_clamwatch
+
+- name: Setup ClamWatch Configuration
+  ansible.builtin.include_tasks:
+    file: "clam_watch/configuration.yml"
+  tags:
+    - clamav
+  when: clamav_clamwatch
 
 - name: Flush Handlers
   ansible.builtin.meta: flush_handlers
@@ -46,6 +60,13 @@
 
 - name: Ensure Services Are Always Running
   ansible.builtin.include_tasks:
-    file: "started.yml"
+    file: "clam_av/processes.yml"
   tags:
     - clamav
+
+- name: Ensure Services Are Always Running
+  ansible.builtin.include_tasks:
+    file: "clam_watch/processes.yml"
+  tags:
+    - clamav
+  when: clamav_clamwatch

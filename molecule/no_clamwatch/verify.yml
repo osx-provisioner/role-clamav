@@ -5,16 +5,16 @@
   tasks:
 
     - name: Check File System Content
-      include_tasks: "../common/tasks/files.yml"
+      ansible.builtin.include_tasks: "../common/tasks/files.yml"
 
     - name: Check File System Content
-      include_tasks: "../common/tasks/files.yml"
+      ansible.builtin.include_tasks: "../common/tasks/files.yml"
 
     - name: Check Processes
-      include_tasks: "../common/tasks/processes.yml"
+      ansible.builtin.include_tasks: "../common/tasks/processes.yml"
 
     - name: Assert the binaries are symlinked correctly
-      assert:
+      ansible.builtin.assert:
         that:
           - clamd_file.stat.executable
           - freshclam_file.stat.executable
